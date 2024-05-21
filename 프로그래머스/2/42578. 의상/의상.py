@@ -5,11 +5,11 @@ def solution(clothesList):
     for clothes in clothesList:
         for i in range(len(clothes) - 1):
             if clothes[-1] in hash:
-                hash[clothes[-1]].append(clothes[i])
+                hash[clothes[-1]] += 1
             else:
-                hash[clothes[-1]] = ["none", clothes[i]]
+                hash[clothes[-1]] = 2
 
     for clothes in hash:
-        total *= len(hash[clothes])
+        total *= hash[clothes]
 
     return total - 1
