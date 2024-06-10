@@ -3,14 +3,17 @@ def solution(n, times):
     left = 1
     right = n * max(times)
 
+    # 최소의 시간이 최대의 시간보다 커지거나 같으면 멈춘다.
     while right >= left:
+		    # 평균 시간
         mid = (left + right) // 2
 
         # 전달 받은 시간 동안 입국 심사가 가능한 인원 수
         pass_people = get_pass_people(times, mid)
 
-        # 시간이 여유 롭다? 전달 받은 시간을 줄인다.
+        # 시간이 여유롭다? 전달 받은 시간을 줄인다.
         if pass_people >= n:
+            # 만약 최소의 시간과 최대의 시간이 같다면 반복을 종료한다.
             if left == right:
                 answer = mid
                 break
@@ -22,6 +25,7 @@ def solution(n, times):
             left = mid + 1
 
     return answer
+
 
 def get_pass_people(times, pass_time):
     total = 0
