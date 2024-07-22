@@ -1,15 +1,21 @@
 function solution(arr1, arr2) {
-    var answer = [];
-    for (let i = 0; i < arr1.length; i++) {
-        const result = [];
-        for (let y = 0; y < arr2[0].length; y++) { 
-            let total = 0;
-            for (let z = 0; z < arr2.length; z++) {  
-                total += arr1[i][z] * arr2[z][y];
-            }
-            result.push(total);
-        }
-        answer.push(result);
+    const r1 = arr1.length;
+    const c1 = arr1[0].length;
+    const c2 = arr2[0].length;
+
+    const answer = []
+
+    for (let i = 0; i < r1; i++){
+        answer.push(new Array(c2).fill(0))
     }
+
+    for (let i = 0; i < r1; i++){
+        for (let j = 0; j < c2; j++){
+            for (let k = 0; k < c1; k++){
+                answer[i][j] += arr1[i][k] * arr2[k][j]
+            }
+        }
+    }
+
     return answer;
 }
