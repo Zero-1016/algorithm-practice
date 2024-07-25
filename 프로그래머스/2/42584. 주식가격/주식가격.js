@@ -1,40 +1,21 @@
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
 function solution(prices) {
-  const answer = new Array(prices.length).fill(0);
-  const stack = [];
-  let length = prices.length;
+    const n = prices.length;
+    const answer = new Array(n).fill(0);
 
-  for(let i = 0; i < length; i++) {
-    while(stack.length && prices[i] < prices[stack[stack.length - 1]]) {
-      let temp = stack.pop();
-      answer[temp] = i - temp;
+    const stack = [];
+
+    for (let i = 0; i < n; i++) {
+        while (stack.length > 0 && prices[i] < prices[stack[stack.length - 1]]) {
+            const top = stack.pop();
+            answer[top] = i - top;
+        }
+        stack.push(i);
     }
-    stack.push(i);
-  }
 
-  while(stack.length) {
-    let temp = stack.pop();
-    answer[temp] = length - temp - 1;
-  }
+    while (stack.length > 0) {
+        const top = stack.pop();
+        answer[top] = n - top - 1;
+    }
 
-  return answer;
+    return answer;
 }
