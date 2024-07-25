@@ -1,11 +1,16 @@
 function solution(s) {
-    const store = [];
-    s.split('').forEach((val, ind) => {
-        if (store[store.length - 1] === val) {
-            store.pop();
-        } else {
-            store.push(val);
+    if (s.length % 2 === 1) return 0
+
+    const stack = [];
+
+    for (let i = 0; i < s.length; i++) {
+        stack.push(s[i])
+
+        while (stack.length > 1 && stack[stack.length - 1] === stack[stack.length - 2]) {
+            stack.pop()
+            stack.pop()
         }
-    });
-    return store.length === 0 ? 1 : 0;
+    }
+
+    return stack.length === 0 ? 1 : 0
 }
