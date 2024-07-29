@@ -1,17 +1,19 @@
 function solution(cards1, cards2, goal) {
-    cards1.reverse();
-    cards2.reverse();
-    const result = [];
-    
-    while (result.length !== goal.length) {
-        if (cards1.length > 0 && cards1[cards1.length - 1] === goal[result.length]) {
-            result.push(cards1.pop());
-        } else if (cards2.length > 0 && cards2[cards2.length - 1] === goal[result.length]) {
-            result.push(cards2.pop());
-        } else {
-            break;
+    const n = goal.length;
+    let [index_1, index_2] = [0, 0]
+    let temp = true
+
+    for (let i = 0; i < n && temp; i++) {
+        if (cards1[index_1] === goal[i]) {
+            index_1++
+            continue
         }
+        if (cards2[index_2] === goal[i]) {
+            index_2++
+            continue
+        }
+        temp = false
     }
-    
-    return result.length === goal.length ? "Yes" : "No";
+
+    return temp ? "Yes" : "No";
 }
