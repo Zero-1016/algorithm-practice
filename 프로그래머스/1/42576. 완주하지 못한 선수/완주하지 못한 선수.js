@@ -1,21 +1,25 @@
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
 function solution(participant, completion) {
-    const hash = {}
-
-    for (const name of participant) {
-        if (hash[name]) {
-            hash[name] += 1
-        } else {
-            hash[name] = 1
+    const map = new Map();
+    let result = ""
+    participant.forEach(name => map.set(name, (map.get(name) || 0) + 1));
+    completion.forEach(name => map.set(name, (map.get(name) || 0) - 1));
+    map.forEach((value, key) => {
+        if (value === 1) {
+            result = key
         }
-    }
-
-    for (const name of completion) {
-        hash[name] -= 1
-    }
-
-    for (const name of participant) {
-        if (hash[name] === 1) {
-            return name
-        }
-    }
+    })
+    return result
 }
