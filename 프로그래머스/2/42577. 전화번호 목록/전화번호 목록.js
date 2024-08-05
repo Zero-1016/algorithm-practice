@@ -1,15 +1,10 @@
 function solution(phone_book) {
-    const hash = new Set(phone_book);
+    phone_book.sort()
 
-    for (let phone_number of hash) {
-        let prefix = "";
-        for (let char of phone_number) {
-            prefix += char
-            if (hash.has(prefix) && prefix !== phone_number) {
-                return false
-            }
+    for (let i = 0; i < phone_book.length -1; i++) {
+        if (phone_book[i + 1].startsWith(phone_book[i])) {
+            return false
         }
     }
-
-    return true;
+    return true
 }
