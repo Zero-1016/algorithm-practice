@@ -1,38 +1,50 @@
+function find(parent, i) {
+    if (parent[i] === i) {
+        return i;
+    }
+
+    parent[i] = find(parent, parent[i])
+    return parent[i]
+}
+
+function union(parent, rank, x, y) {
+    const xroot = find(parent, x)
+    const yroot = find(parent, y)
+
+    if (rank[xroot] < rank[yroot]) {
+        parent[xroot] = y
+    } else if (rank[xroot] > rank[yroot]) {
+        parent[yroot] = xroot
+    } else {
+        parent[yroot] = xroot;
+        rank[xroot] += 1;
+    }
+}
+
 function solution(n, costs) {
-    let minValue = Infinity;
-    costs.sort((a, b) => a[2] - b[2]);
+    costs.sort((a, b) => a[2] - b[2])
 
-    const rank = Array(n).fill(0);
-    const parent = Array.from(Array(n), (_, index) => index);
+    const parent = Array.from({length: n}, (_, i) => i)
 
-    function findParent(i) {
-        if (parent[i] !== i) parent[i] = findParent(parent[i]);
-        return parent[i];
-    }
-    
-    function union(a, b) {
-        let rootA = findParent(a);
-        let rootB = findParent(b);
-        if (rootA !== rootB) {  if (rank[rootA] > rank[rootB]) {
-            parent[rootB] = rootA;
-        } else if (rank[rootA] < rank[rootB]) {
-            parent[rootA] = rootB;
-        } else {
-            parent[rootB] = rootA;
-            rank[rootA]++;
-        } }
-    }
+    const rank = Array(n).fill(0)
 
+    let minConst = 0;
     let edges = 0;
-    let sumValue = 0;
-    for (let [start, end, value] of costs) {
-        if (findParent(start) !== findParent(end)) {
-            union(start, end);
-            sumValue += value;
-            edges++;
-            if (edges === n - 1) break; 
+
+    for (const edge of costs) {
+        if (edges === n - 1) {
+            break
+        }
+
+        const x = find(parent, edge[0])
+        const y = find(parent, edge[1])
+
+        if(x!==y){
+            union(parent,rank, x, y)
+            minConst += edge[2]
+            edges += 1
         }
     }
 
-    return sumValue;
+    return minConst
 }
