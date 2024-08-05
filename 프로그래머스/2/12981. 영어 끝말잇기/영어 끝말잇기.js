@@ -1,22 +1,14 @@
 function solution(n, words) {
-    const usedWords = new Set();
-    let flag = true;
-    let count = 0;
-    while (flag) {
-        usedWords.add(words[count]);
-        count++;
-        if (usedWords.size !== count) {
-            flag = false;
-            break;
+    const usedWord = new Set()
+    let prevLastWord = words[0][0]
+    for (let i = 0; i < words.length; i++) {
+        let word = words[i]
+        if (usedWord.has(word) || word[0] !== prevLastWord) {
+            return [i % n + 1, Math.floor(i / n) + 1]
         }
-
-        if (count === words.length) break;
-
-        if (words[count][0] !== words[count - 1][words[count - 1].length - 1]) {
-            count++;
-            flag = false;
-            break;
-        }
+        usedWord.add(word)
+        prevLastWord = word.slice(-1)
     }
-    return flag ? [0, 0] : [((count - 1) % n) + 1, Math.ceil(count / n)];
+
+    return [0, 0]
 }
