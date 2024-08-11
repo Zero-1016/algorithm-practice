@@ -1,32 +1,65 @@
+class Queue {
+    constructor() {
+        this.items = [];
+        this.front = 0;
+        this.rear = 0;
+    }
+
+    push(item) {
+        this.items.push(item);
+        this.rear++;
+    }
+
+    pop() {
+        if (this.isEmpty()) {
+            return null;
+        }
+        return this.items[this.front++];
+    }
+
+    isEmpty() {
+        return this.front === this.rear;
+    }
+}
+
 function solution(maps) {
-    const queue = [];
-    const dx = [1, 0, -1, 0];
-    const dy = [0, 1, 0, -1];
-    const n = maps.length;
-    const m = maps[0].length;
+    const [x_length, y_length] = [maps[0].length, maps.length];
+    const directions = [[0, -1], [0, 1], [1, 0], [-1, 0]];
+    const queue = new Queue();
+    const visited = new Set();
 
     queue.push([0, 0, 1]);
-    maps[0][0] = 0;
+    visited.add('0,0');
 
-    while (queue.length) {
-        const [x, y, count] = queue.shift();
+    while (!queue.isEmpty()) {
+        const [x, y, dist] = queue.pop();
 
-        if (x === n - 1 && y === m - 1) {
-            return count;
+        if (x === x_length - 1 && y === y_length - 1) {
+            return dist;
         }
 
-        for (let i = 0; i < 4; i++) {
-            const nx = x + dx[i];
-            const ny = y + dy[i];
-      
-            if (nx >= 0 && nx < n && ny >= 0 && ny < m) {
-              if (maps[nx][ny] === 1) {
-                queue.push([nx, ny, count + 1]);
-                maps[nx][ny] = 0; 
-              }
+        for (const [dx, dy] of directions) {
+            const newX = x + dx;
+            const newY = y + dy;
+
+            if (newX >= 0 && newY >= 0 && newX < x_length && newY < y_length && maps[newY][newX] === 1) {
+                const newPos = `${newX},${newY}`;
+                if (!visited.has(newPos)) {
+                    visited.add(newPos);
+                    queue.push([newX, newY, dist + 1]);
+                }
             }
-          }
+        }
     }
 
     return -1;
+}
+
+const test_case = [
+    [[1, 0, 1, 1, 1], [1, 0, 1, 0, 1], [1, 0, 1, 1, 1], [1, 1, 1, 0, 1], [0, 0, 0, 0, 1]],
+    [[1, 0, 1, 1, 1], [1, 0, 1, 0, 1], [1, 0, 1, 0, 1], [1, 0, 1, 1, 1], [1, 1, 1, 0, 0], [0, 0, 0, 0, 1]]
+];
+
+for (const t_case of test_case) {
+    console.log(solution(t_case));
 }
