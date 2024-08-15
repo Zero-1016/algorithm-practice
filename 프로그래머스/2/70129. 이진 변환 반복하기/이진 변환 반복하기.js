@@ -1,14 +1,13 @@
 function solution(s) {
-    let count = 0;
-    let delete_zero_count = 0;
-    let s_string = s;
-    while (true && count < 10) {
-        if (s_string === '1') break;
-        const prev_count = s_string.length
-        s_string = s_string.replaceAll('0', '');
-        delete_zero_count += prev_count - s_string.length
-        s_string = s_string.length.toString(2)
-        count += 1;
+    let countTransform = 0;
+    let countZero = 0;
+    
+    while (s !== '1'){
+        s = s.split('')
+        countTransform += 1
+        countZero += s.filter((c) => c === '0').length
+        s = s.filter((char) => char === '1').length.toString(2);
     }
-    return [count, delete_zero_count];
+    
+    return [countTransform, countZero]
 }
