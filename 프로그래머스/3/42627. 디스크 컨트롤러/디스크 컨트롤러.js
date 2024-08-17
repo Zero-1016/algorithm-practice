@@ -6,18 +6,19 @@ class Queue {
     }
 
     insert(item) {
-        this.heap.push(item);
-        this.heap.sort((a, b) => a[1] - b[1]);
-        this.rear++;
+        this.heap[this.rear++] = item; 
+        this.heap = this.heap.slice(this.head, this.rear); 
+        this.heap.sort((a, b) => a[1] - b[1]); 
+        this.head = 0; 
+        this.rear = this.heap.length;
     }
 
     pop() {
-        this.rear--;
-        return this.heap.shift();
+        return this.heap[this.head++];
     }
 
     isEmpty() {
-        return this.heap.length === 0;
+        return this.head === this.rear;
     }
 }
 
@@ -26,7 +27,7 @@ function solution(jobs) {
     let count = 0;
     let select = 0;
     const queue = new Queue();
-    jobs.sort((a, b) => a[0] - b[0]); // 작업 요청 시간 순으로 정렬
+    jobs.sort((a, b) => a[0] - b[0]);
 
     while (select < jobs.length || !queue.isEmpty()) {
         while (select < jobs.length && jobs[select][0] <= count) {
@@ -44,4 +45,3 @@ function solution(jobs) {
 
     return Math.floor(answer / jobs.length);
 }
-
