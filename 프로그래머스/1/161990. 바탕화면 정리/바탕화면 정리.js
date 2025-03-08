@@ -1,16 +1,26 @@
+const TARGET = "#";
+
 function solution(wallpaper) {
-    let rows = wallpaper.length
-    let cols = wallpaper[0].length
+  let position = [Infinity, Infinity, -Infinity, -Infinity];
 
-    const filePosition = new Array();
-
-    for (let i = 0; i < rows; i++) {
-        for (let j = 0; j < cols; j++) {
-            if (wallpaper[i][j] === "#") {
-                filePosition.push([i, j])
-            }
+  wallpaper.forEach((arr, y) => {
+    arr.split("").forEach((value, x) => {
+      if (value === TARGET) {
+        if (position[0] > y) {
+          position[0] = y;
         }
-    }
+        if (position[1] > x) {
+          position[1] = x;
+        }
+        if (position[2] < y + 1) {
+          position[2] = y + 1;
+        }
+        if (position[3] < x + 1) {
+          position[3] = x + 1;
+        }
+      }
+    });
+  });
 
-    return [Math.min(...filePosition.map(v => v[0])), Math.min(...filePosition.map(v => v[1])), Math.max(...filePosition.map(v => v[0])) + 1, Math.max(...filePosition.map(v => v[1])) + 1];
+  return position;
 }
