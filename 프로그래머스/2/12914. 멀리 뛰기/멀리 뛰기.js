@@ -1,9 +1,14 @@
 function solution(n) {
-    const fib = new Array();
-    fib[0] = 1;
-    fib[1] = 1;
-    for (let i = 2; i <= n; i++) {
-        fib[i] = (fib[i - 1] + fib[i - 2]) % 1234567;
+    var answer = 0;
+    const arr = []
+    
+    arr[0] = 1
+    arr[1] = 1
+    
+    for(let i = 0; i <= n; i++){
+        if(arr[i] < 2) continue
+        arr[i] = (arr[i - 1] + arr[i - 2]) %1234567
     }
-    return fib[n];
+    
+    return arr[n];
 }
