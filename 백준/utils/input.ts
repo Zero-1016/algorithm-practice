@@ -27,10 +27,10 @@ export const oneLineStringInput = (inputPath = LOCAL_INPUT_PATH): string =>
 
 /**
  * @example
- *  const input = require("fs")
+ *  const input = Number(require("fs")
  *    .readFileSync("/dev/stdin")
  *    .toString()
- *    .trim();
+ *    .trim());
  */
 export const oneLineNumberInput = (inputPath = LOCAL_INPUT_PATH): number =>
   Number(readRawInput(inputPath));
@@ -44,7 +44,7 @@ export const oneLineNumberInput = (inputPath = LOCAL_INPUT_PATH): number =>
  *    .split(" ");
  */
 export const oneLineStringArrayInput = (
-  inputPath = LOCAL_INPUT_PATH
+  inputPath = LOCAL_INPUT_PATH,
 ): string[] => readRawInput(inputPath).split(" ");
 
 /**
@@ -57,7 +57,7 @@ export const oneLineStringArrayInput = (
  *    .map(Number);
  */
 export const oneLineNumberArrayInput = (
-  inputPath = LOCAL_INPUT_PATH
+  inputPath = LOCAL_INPUT_PATH,
 ): number[] => readRawInput(inputPath).split(" ").map(Number);
 
 /**
@@ -93,7 +93,7 @@ export const multiLineNumberInput = (inputPath = LOCAL_INPUT_PATH): number[] =>
  *    .map((el) => el.split(" "));
  */
 export const multiLineStringArrayInput = (
-  inputPath = LOCAL_INPUT_PATH
+  inputPath = LOCAL_INPUT_PATH,
 ): string[][] => readLines(inputPath).map((line: string) => line.split(" "));
 
 /**
@@ -106,6 +106,6 @@ export const multiLineStringArrayInput = (
  *    .map((el) => el.split(" ").map(Number));
  */
 export const multiLineNumberArrayInput = (
-  inputPath = LOCAL_INPUT_PATH
+  inputPath = LOCAL_INPUT_PATH,
 ): number[][] =>
   readLines(inputPath).map((line: string) => line.split(" ").map(Number));
