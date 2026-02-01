@@ -2,5 +2,7 @@
   "explorer.fileNesting.enabled": true,
   "explorer.fileNesting.patterns": {
     "*.ts": "${capture}.test.ts"
-  }
+  },
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true
 }
